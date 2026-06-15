@@ -21,6 +21,12 @@ class TravelProjectSerializer(serializers.ModelSerializer):
         return list(obj.places.values_list('external_id', flat=True))
     
 
+    def validate_places(self, value):
+        if len(value) > 10:
+            raise serializers.ValidationError('Maximus 10 places allowed')
+        return value
+
+
     # the field place_external_ids cannot be changed
     def get_fields(self):
         fields = super().get_fields()
