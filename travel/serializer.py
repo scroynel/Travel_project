@@ -19,6 +19,14 @@ class TravelProjectSerializer(serializers.ModelSerializer):
     
     def get_place_external_ids(self, obj):
         return list(obj.places.values_list('external_id', flat=True))
+    
+
+    # the field place_external_ids cannot be changed
+    def get_fields(self):
+        fields = super().get_fields()
+        if self.context['request'].method in ['PUT', 'PATCH']:
+            fields.pop('place_external_ids', None)
+        return fields
 
 
 #   Create travel project with places fetched from external API
