@@ -21,6 +21,7 @@ class TravelProjectSerializer(serializers.ModelSerializer):
         return list(obj.places.values_list('external_id', flat=True))
 
 
+#   Create travel project with places fetched from external API
     def create(self, validated_data):
         external_ids = validated_data.pop('places', [])
 
@@ -43,6 +44,7 @@ class TravelProjectSerializer(serializers.ModelSerializer):
             project.places.add(place)
 
         return project
+
 
 class ProjectPlaceSerializer(serializers.ModelSerializer):
     class Meta:
